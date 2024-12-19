@@ -41,7 +41,6 @@ public class S02_memoryRDD {
     //4、关闭context
     context.close();
 
-
     }
     
 }

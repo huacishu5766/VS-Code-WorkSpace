@@ -2,7 +2,7 @@ package com.huacishu.BigData.Spark.D01_instance;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 
-public class Spark01_env {
+public class S01_env {
     public static void main(String[] args) {
         // 1、创建SparkConf对象，配置信息
         SparkConf conf = new SparkConf();
