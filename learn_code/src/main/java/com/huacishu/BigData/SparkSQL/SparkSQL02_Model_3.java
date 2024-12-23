@@ -1,11 +1,10 @@
 package com.huacishu.BigData.SparkSQL;
 
-
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-public class SparkSQL02_Model {
+public class SparkSQL02_Model_3 {
 
    public static void main(String[] args) {
     
@@ -14,12 +13,11 @@ public class SparkSQL02_Model {
        .appName("spark01")
        .master("local[2]")
        .getOrCreate();
+       Dataset<Row> ds = sparkSession.read().json("data/user.json");
 
-       //SparkSQL对数据模型也进行了封装：RDD --> Dataset
-    //    对接文件数据源时，会将文件中的一行数据封装成ROW对象
-       Dataset<Row> json = sparkSession.read().json("data/uer.json");
-
-    //    RDD<Row>   = json.rdd();
+       // 采用DSL语法进行访问
+       ds.select("id","name","age")
+       .show();
 
 
        sparkSession.close();
