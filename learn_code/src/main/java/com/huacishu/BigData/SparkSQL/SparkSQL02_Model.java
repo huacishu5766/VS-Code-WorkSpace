@@ -18,8 +18,9 @@ public class SparkSQL02_Model {
        //SparkSQL对数据模型也进行了封装：RDD --> Dataset
     //    对接文件数据源时，会将文件中的一行数据封装成ROW对象
        Dataset<Row> json = sparkSession.read().json("data/uer.json");
+       json.collect();
 
-    //    RDD<Row>   = json.rdd();
+    //    RDD<Row>   = jsonrdd.rdd();
 
 
        sparkSession.close();
