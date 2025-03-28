@@ -13,7 +13,7 @@ public class unboundedDemo {
          // 1. 创建流式执行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         //2. 读取数据
-        DataStreamSource<String> socketDS = env.socketTextStream("hadoop102", 7777);
+        DataStreamSource<String> socketDS = env.socketTextStream("hadoop101", 7777);
         //3. 处理数据
        SingleOutputStreamOperator<Tuple2<String,Integer>> sum = socketDS.flatMap((String value, Collector<Tuple2<String ,Integer>> out) -> {
             
