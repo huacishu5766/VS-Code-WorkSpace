@@ -1,4 +1,4 @@
-package flink_demo;
+package flink_demo.wc;
 
 
 import org.apache.flink.api.common.typeinfo.Types;
