@@ -9,6 +9,8 @@ import org.apache.flink.api.java.operators.UnsortedGrouping;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
 
+//TODO DataString 读文件实现
+
 public class BatchWordCount {
     // 1. 创建执行环境
     public static void main(String[] args) throws Exception {
