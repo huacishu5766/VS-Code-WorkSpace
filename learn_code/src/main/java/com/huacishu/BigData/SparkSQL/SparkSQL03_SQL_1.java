@@ -6,7 +6,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.;
+import org.apache.spark.sql.types.*;
 
 public class SparkSQL03_SQL_1 {
     public static void main(String[] args) {
