@@ -32,6 +32,7 @@ public class PartitionDemo {
         //socketDS.global().print();
 
         //keyby分区
+        //one-to-one Forward分区器
         env.execute();
 
 
