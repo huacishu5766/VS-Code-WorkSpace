@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Flink_dy/Flink_dy.iml" filepath="$PROJECT_DIR$/Flink_dy/Flink_dy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/VS-Code-WorkSpace.iml" filepath="$PROJECT_DIR$/.idea/VS-Code-WorkSpace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink_code/flink_code.iml" filepath="$PROJECT_DIR$/flink_code/flink_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learn_code/learn_code.iml" filepath="$PROJECT_DIR$/learn_code/learn_code.iml" />
+    </modules>
+  </component>
+</project>
