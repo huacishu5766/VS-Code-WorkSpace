@@ -13,7 +13,7 @@ import org.apache.flink.util.Collector;
  * @Auther:huacishu
  * @Date: 2025/7/11
  */
-public class demo01_socket {
+public class Code01_socket {
     public static void main(String[] args) {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -44,6 +44,9 @@ public class demo01_socket {
 
         SingleOutputStreamOperator<Tuple2<String, Integer>> f1 = keyBy.sum("f1");
 
-        sum.print();
+        // 打印
+        sum.print("sum");
+
+        // f1.print("f1");
     }
 }
