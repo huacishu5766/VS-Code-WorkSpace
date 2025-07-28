@@ -3,6 +3,8 @@ package flink_demo.watermaker;
 import flink_demo.bean.WaterSensor;
 import flink_demo.function.WaterSensorMapFunction;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.flink.api.common.eventtime.WatermarkGenerator;
+import org.apache.flink.api.common.eventtime.WatermarkGeneratorSupplier;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -18,26 +20,22 @@ import java.time.Duration;
  * @Auther:huacishu
  * @Date: 2025/7/23
  */
-public class WatermarkOutOfOrderDemo {
+public class WatermarkCustomDemo {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
 
-        //env.getConfig().setAutoWatermarkInterval(200);
-
         SingleOutputStreamOperator<WaterSensor> sensorDS = env
                 .socketTextStream("hadoop101", 7777)
                 .map(new WaterSensorMapFunction());
+        //默认周期
+        env.getConfig().setAutoWatermarkInterval(2000);
 
         //TODO 指定watermark 策略
-
-        //1、定义Watermark 策略
         WatermarkStrategy<WaterSensor> waterSensorWatermarkStrategy = WatermarkStrategy
-                //1.1  指定Watermark生成，乱序的，等待3秒
-                .<WaterSensor>forBoundedOutOfOrderness(Duration.ofSeconds(3))
-                //1.2 指定时间戳 分配器 从数据中提取
+                //TODO 指定自定义的watermark生成器
+                .forGenerator((WatermarkStrategy<WaterSensor>) context -> new MyPeriodWatermarkGenerator<>(3000L))
                 .withTimestampAssigner((element ,recordTimestamp ) ->  {
-                        System.out.println("数据 = " + element + ",recordTs = " + recordTimestamp);
                         return element.getTs() * 1000L;
                     }
                 );
@@ -46,7 +44,6 @@ public class WatermarkOutOfOrderDemo {
                 .assignTimestampsAndWatermarks(waterSensorWatermarkStrategy);
 
         sensorDSWithWatermark.keyBy(sensor -> sensor.getId())
-                 //使用 事件时间语义 的窗口
                 .window(TumblingEventTimeWindows.of(Time.seconds(10)))
                 .process(new ProcessWindowFunction<WaterSensor, String, String, TimeWindow>() {
                     /**
@@ -76,14 +73,6 @@ public class WatermarkOutOfOrderDemo {
 
         env.execute();
     }
-
-
-    /**
-     * TODO 内置Watermark的生成原理
-     * 1、都是周期性生成的，默认是200ms
-     *       env.getConfig().setAutoWatermarkInterval(200);
-     *      .defaultValue(Duration.ofMillis(200))
-     * 2、有序流：Watermark = 当前最大事件时间 - 1ms
-     * 3、乱序流：Watermark = 当前最大事件时间 - 延迟时间 - 1ms
-     */
 }
+
+
