@@ -48,5 +48,6 @@ public class WatermarkLdlenessDemo {
                         out.collect("key" + integer + "的窗口[" + windowStart + "," + windowEnd + "，包含" + count + "条数据===>" + elements.toString());
                     }
                 });
+
     }
 }
